@@ -1,9 +1,82 @@
+%% Deutsche und Englische Anführungszeichen \gq, \eq
 \newcommand{\gq}[1]{\glqq #1\grqq}
+\newcommand{\eq}[1]{``#1''}
 
+
+%% Knappe Listen, Gruppierung: {sit}, {snu}, {g} 
 \usepackage{enumitem}
 
-\newenvironment{sit}{\begin{itemize}[noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt]}{\end{itemize}}
-
-\newenvironment{snu}{\begin{enumerate}[noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt]}{\end{enumerate}}
-
+%\newenvironment{sit}{\begin{itemize}[noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt]}{\end{itemize}}
+%
+%\newenvironment{snu}{\begin{enumerate}[noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt]}{\end{enumerate}}
+%
 \newcommand{\g}[1]{\begin{minipage}{\textwidth}#1\end{minipage}}
+
+\usepackage{xparse}
+
+%Short enumerations
+\setlist{nolistsep}
+\DeclareDocumentEnvironment{sit}{o}
+{
+	\begin{minipage}{\textwidth}
+		\IfNoValueTF{#1}
+			{}
+			{\esec{#1}}
+		\begin{itemize}[noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt]
+}{
+		\end{itemize}
+		\vspace{1mm}
+	\end{minipage}
+}
+
+\DeclareDocumentEnvironment{snu}{o}
+{
+	\begin{minipage}{\textwidth}
+		\IfNoValueTF{#1}
+			{}
+			{\esec{#1}}
+		\begin{enumerate}[noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt]
+}{
+		\end{enumerate}
+		\vspace{1mm}
+	\end{minipage}
+}
+
+%% \todo
+\usepackage{color}
+\newcommand{\todo}[1]{\textbf{\textcolor{red}{#1}}}
+
+
+%% Font Setup: \jdfontsetup
+
+%Stellt die Konstruktion \ifxetexorluatex ... \else .. \fi zur Verfügung
+\newcommand{\xeluabool}{
+%   Mögliche Implementierung, allerdings zwei Paketreferenzen nach außen, die optimalerweise vermieden werden sollten
+	\usepackage{ifxetex}
+	\usepackage{ifluatex}
+	
+	\usepackage{ifxetex,ifluatex}
+	\newif\ifxetexorluatex
+	\ifxetex
+	  \xetexorluatextrue
+	\else
+	  \ifluatex
+	    \xetexorluatextrue
+	  \else
+	    \xetexorluatexfalse
+	  \fi
+	\fi
+}
+
+%Lädt die Kodierungs-/Schriftpakete für die verwendete Engine
+\newcommand{\jdfontsetup}{
+	\xeluabool
+	
+	\ifxetexorluatex
+	  \usepackage{fontspec}
+	\else
+	  \usepackage[T1]{fontenc}
+	  \usepackage[utf8]{inputenc}
+	  \usepackage{lmodern}
+	\fi
+}
