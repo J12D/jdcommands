@@ -2,50 +2,44 @@
 \newcommand{\gq}[1]{\glqq #1\grqq}
 \newcommand{\eq}[1]{``#1''}
 
+\newcommand{\fsfm}{Frankfurt School of Finance \& Management}
 
-%% Knappe Listen, Gruppierung: {sit}, {snu}, {g} 
-\usepackage{enumitem}
-
-%\newenvironment{sit}{\begin{itemize}[noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt]}{\end{itemize}}
-%
-%\newenvironment{snu}{\begin{enumerate}[noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt]}{\end{enumerate}}
-%
 \newcommand{\g}[1]{\begin{minipage}{\textwidth}#1\end{minipage}}
+
 
 \usepackage{xparse}
 
 %Short enumerations
-\setlist{nolistsep}
-\DeclareDocumentEnvironment{sit}{o}
-{
-	\begin{minipage}{\textwidth}
-		\IfNoValueTF{#1}
-			{}
-			{\esec{#1}}
-		\begin{itemize}[noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt]
+\usepackage{paralist}
+\setlength{\pltopsep}{-0.5em}
+
+\DeclareDocumentEnvironment{sit}{oo}
+{\IfNoValueTF{#1}{}
+	{	\begin{minipage}{\textwidth}
+		\IfNoValueTF{#2}{\textbf{#1}}{#2{#1}}
+	}
+	\begin{compactitem}
 }{
-		\end{itemize}
-		\vspace{1mm}
-	\end{minipage}
+	\end{compactitem}
+	\IfNoValueTF{#1}{}{\end{minipage}}
 }
 
-\DeclareDocumentEnvironment{snu}{o}
-{
-	\begin{minipage}{\textwidth}
-		\IfNoValueTF{#1}
-			{}
-			{\esec{#1}}
-		\begin{enumerate}[noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt]
+\DeclareDocumentEnvironment{snu}{oo}
+{\IfNoValueTF{#1}{}
+	{	\begin{minipage}{\textwidth}
+		\IfNoValueTF{#2}{\textbf{#1}}{#2{#1}}
+	}
+	\begin{compactenum}
 }{
-		\end{enumerate}
-		\vspace{1mm}
-	\end{minipage}
+	\end{compactenum}
+	\IfNoValueTF{#1}{}{\end{minipage}}
 }
 
 %% \todo
 \usepackage{color}
 \newcommand{\todo}[1]{\textbf{\textcolor{red}{#1}}}
-
+\usepackage{soul}
+\newcommand{\highlight}[1]{\hl{#1}}
 
 %% Font Setup: \jdfontsetup
 
@@ -80,3 +74,4 @@
 	  \usepackage{lmodern}
 	\fi
 }
+
