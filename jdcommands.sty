@@ -1,22 +1,39 @@
-%% Deutsche und Englische Anführungszeichen \gq, \eq
-\newcommand{\gq}[1]{\glqq #1\grqq}
-\newcommand{\eq}[1]{``#1''}
+\usepackage{xparse}
+\usepackage{tabularx}
+
+%% Shorthands
+\newcommand{\gq}[1]{\glqq #1\grqq} %German Quotes
+\newcommand{\eq}[1]{``#1''}        %English Quotes
 
 \newcommand{\fsfm}{Frankfurt School of Finance \& Management}
 
+\newcommand{\pro}{\item[$+$]}
+\newcommand{\con}{\item[$-$]}
+
+
+%% Structure
 \newcommand{\g}[1]{\begin{minipage}{\textwidth}#1\end{minipage}}
 
-
-\usepackage{xparse}
 
 %Short enumerations
 \usepackage{paralist}
 \setlength{\pltopsep}{-0.5em}
 
-\DeclareDocumentEnvironment{sit}{oo}
+\DeclareDocumentEnvironment{sit}{o}
 {\IfNoValueTF{#1}{}
-	{	\begin{minipage}{\textwidth}
-		\IfNoValueTF{#2}{\textbf{#1}}{#2{#1}}
+	{	\par\noindent
+    \begin{samepage}
+    \textbf{#1}%
+  }
+  \begin{compactitem}
+}{
+  \end{compactitem}
+  \IfNoValueTF{#1}{}{\end{samepage}}
+}
+
+\DeclareDocumentEnvironment{jit}{o}
+{\IfNoValueTF{#1}{}
+	{	\begin{minipage}{\textwidth}#1
 	}
 	\begin{compactitem}
 }{
@@ -35,11 +52,78 @@
 	\IfNoValueTF{#1}{}{\end{minipage}}
 }
 
+
+%% General
+\newcommand{\myparagraph}[1]{\paragraph{#1}\nopagebreak\mbox{}\nopagebreak\\[-2em]}
+
+
+%% Definitions
+\newif\ifingdefi
+
+% Single Definitions
+\newcommand{\ld}[1]{\textbf{#1}:&}
+\newcommand{\sld}[1]{~~~\textsl{#1}:&}
+
+\newcommand{\defi}[2]{%
+\ifingdefi
+	\ld{#1}#2\\
+\else
+	\begin{tabularx}{\textwidth}{@{}l@{~}X@{}}
+	\ld{#1}#2\\
+	\end{tabularx}%
+\fi
+}
+
+\newcommand{\subdefi}[2]{
+\ifingdefi
+	\sld{#1}#2\\
+\else
+	\begin{tabularx}{\textwidth}{@{}l@{~}X@{}}
+	\sld{#1}#2\\
+	\end{tabularx}%
+\fi
+}
+
+
+% Group of Definitions
+\DeclareDocumentEnvironment{gdefi}{o}
+{	\ingdefitrue
+	\IfNoValueTF{#1}{}{\myparagraph{#1}\nopagebreak}
+    
+	\tabularx{\textwidth}{@{}l@{~}X@{}}
+}{
+	\endtabularx
+	\ingdefifalse
+}
+
+
+\DeclareDocumentEnvironment{gsdefi}{o}{
+	\IfNoValueTF{#1}{}
+		{
+		\textbf{#1}\nopagebreak\\[1mm]
+		}
+	\tabularx{\textwidth}{@{}l@{~}X@{}}
+}{
+	\endtabularx
+}
+
+
+%% MISC
+\newcommand{\callout}[1]{
+\fbox{#1}
+}
+
+\newcommand{\conclusion}[1]{
+\callout{\textrightarrow #1}
+}
+
+
 %% \todo
 \usepackage{color}
 \newcommand{\todoo}[1]{\textbf{\textcolor{red}{#1}}}
 \usepackage{soul}
 \newcommand{\highlight}[1]{\hl{#1}}
+
 
 %% Font Setup: \jdfontsetup
 
