@@ -15,47 +15,27 @@
 \newcommand{\g}[1]{\begin{minipage}{\textwidth}#1\end{minipage}}
 
 
+%% General
+\newcommand{\myparagraph}[1]{\paragraph{#1}\nopagebreak\mbox{}\nopagebreak\\[-2em]}
+
+
 %Short enumerations
 \usepackage{paralist}
 \setlength{\pltopsep}{-0.5em}
 
 \DeclareDocumentEnvironment{sit}{o}
-{\IfNoValueTF{#1}{}
-	{	\par\noindent
-    \begin{samepage}
-    \textbf{#1}%
-  }
+{\IfNoValueTF{#1}{}{\myparagraph{#1}}%
   \begin{compactitem}
 }{
   \end{compactitem}
-  \IfNoValueTF{#1}{}{\end{samepage}}
-}
-
-\DeclareDocumentEnvironment{jit}{o}
-{\IfNoValueTF{#1}{}
-	{	\begin{minipage}{\textwidth}#1
-	}
-	\begin{compactitem}
-}{
-	\end{compactitem}
-	\IfNoValueTF{#1}{}{\end{minipage}}
 }
 
 \DeclareDocumentEnvironment{snu}{oo}
-{\IfNoValueTF{#1}{}
-	{	\begin{minipage}{\textwidth}
-		\IfNoValueTF{#2}{\textbf{#1}}{#2{#1}}
-	}
-	\begin{compactenum}
+{\IfNoValueTF{#1}{}{\myparagraph{#1}}%
+  \begin{compactenum}
 }{
-	\end{compactenum}
-	\IfNoValueTF{#1}{}{\end{minipage}}
+  \end{compactenum}
 }
-
-
-%% General
-\newcommand{\myparagraph}[1]{\paragraph{#1}\nopagebreak\mbox{}\nopagebreak\\[-2em]}
-
 
 %% Definitions
 \newif\ifingdefi
