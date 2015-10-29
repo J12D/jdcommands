@@ -1,7 +1,8 @@
 \usepackage{xparse}
 \usepackage{tabularx}
 
-%% Shorthands
+
+%% ---- Shorthands
 \newcommand{\gq}[1]{\glqq #1\grqq} %German Quotes
 \newcommand{\eq}[1]{``#1''}        %English Quotes
 
@@ -11,15 +12,15 @@
 \newcommand{\con}{\item[$-$]}
 
 
-%% Structure
+%% ---- Structure
 \newcommand{\g}[1]{\begin{minipage}{\textwidth}#1\end{minipage}}
 
 
-%% General
+%% ---- General
 \newcommand{\myparagraph}[1]{\paragraph{#1}\nopagebreak\mbox{}\nopagebreak\\[-2em]}
 
 
-%Short enumerations
+%% ---- Short lists
 \usepackage{paralist}
 \setlength{\pltopsep}{-0.5em}
 
@@ -37,7 +38,8 @@
   \end{compactenum}
 }
 
-%% Definitions
+
+%% ---- Definitions
 \newif\ifingdefi
 
 % Single Definitions
@@ -54,7 +56,7 @@
 \fi
 }
 
-\newcommand{\subdefi}[2]{
+\newcommand{\subdefi}[2]{%
 \ifingdefi
 	\sld{#1}#2\\
 \else
@@ -64,31 +66,19 @@
 \fi
 }
 
-
 % Group of Definitions
 \DeclareDocumentEnvironment{gdefi}{o}
-{	\ingdefitrue
+{	\ingdefitrue%
 	\IfNoValueTF{#1}{}{\myparagraph{#1}\nopagebreak}
     
 	\tabularx{\textwidth}{@{}l@{~}X@{}}
 }{
 	\endtabularx
-	\ingdefifalse
+	\ingdefifalse%
 }
 
 
-\DeclareDocumentEnvironment{gsdefi}{o}{
-	\IfNoValueTF{#1}{}
-		{
-		\textbf{#1}\nopagebreak\\[1mm]
-		}
-	\tabularx{\textwidth}{@{}l@{~}X@{}}
-}{
-	\endtabularx
-}
-
-
-%% MISC
+%% ---- MISC
 \newcommand{\callout}[1]{
 \fbox{#1}
 }
@@ -98,18 +88,10 @@
 }
 
 
-%% \todo
-\usepackage{color}
-\newcommand{\todoo}[1]{\textbf{\textcolor{red}{#1}}}
-\usepackage{soul}
-\newcommand{\highlight}[1]{\hl{#1}}
+%% ---- Fonts
 
-
-%% Font Setup: \jdfontsetup
-
-%Stellt die Konstruktion \ifxetexorluatex ... \else .. \fi zur Verfügung
+% Stellt die Konstruktion \ifxetexorluatex ... \else .. \fi zur Verfügung
 \newcommand{\xeluabool}{
-%   Mögliche Implementierung, allerdings zwei Paketreferenzen nach außen, die optimalerweise vermieden werden sollten
 	\usepackage{ifxetex}
 	\usepackage{ifluatex}
 	
@@ -126,7 +108,7 @@
 	\fi
 }
 
-%Lädt die Kodierungs-/Schriftpakete für die verwendete Engine
+% Lädt die Kodierungs-/Schriftpakete für die verwendete Engine
 \newcommand{\jdfontsetup}{
 	\xeluabool
 	
@@ -138,4 +120,3 @@
 	  \usepackage{lmodern}
 	\fi
 }
-
