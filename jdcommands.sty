@@ -1,6 +1,6 @@
 \usepackage{xparse}
 \usepackage{tabularx}
-
+\usepackage{xltabular}
 
 %% ---- Shorthands
 \newcommand{\gq}[1]{\glqq #1\grqq} %German Quotes
@@ -17,8 +17,10 @@
 
 
 %% ---- General
-\newcommand{\myparagraph}[1]{\paragraph{#1}\nopagebreak\mbox{}\nopagebreak\\[-2em]}
+\newcommand{\myparagraph}[1]{\paragraph{#1}\nopagebreak\mbox{}\nopagebreak\\[-1.5em]}
 
+%% --- Properly aligned column
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
 
 %% ---- Short lists
 \usepackage{paralist}
@@ -47,12 +49,12 @@
 \newcommand{\sld}[1]{~~~\textsl{#1}:&}
 
 \newcommand{\defi}[2]{%
-\ifingdefi
-	\ld{#1}#2\\
-\else
-	\begin{tabularx}{\textwidth}{@{}l@{~}X@{}}
-	\ld{#1}#2\\
-	\end{tabularx}%
+\ifingdefi%
+\ld{#1}#2\\
+\else%
+\begin{tabularx}{\textwidth}{@{}l@{~}L@{}}
+\ld{#1}#2\\%
+\end{tabularx}%
 \fi
 }
 
@@ -68,14 +70,28 @@
 
 % Group of Definitions
 \DeclareDocumentEnvironment{gdefi}{o}
-{	\ingdefitrue%
-	\IfNoValueTF{#1}{}{\myparagraph{#1}\nopagebreak}
-    
-	\tabularx{\textwidth}{@{}l@{~}X@{}}
-}{
-	\endtabularx
-	\ingdefifalse%
+{%
+\ingdefitrue%
+\IfValueT{#1}{\myparagraph{#1}\nopagebreak}%
+\xltabular{\textwidth}{@{}l@{~}L@{}}
 }
+{%
+\endxltabular
+\ingdefifalse%
+}
+%% Group of Definitions
+%\DeclareDocumentEnvironment{gdefi}{o}
+%{%
+%\ingdefitrue%
+%\IfNoValueTF{#1}{}{\myparagraph{#1}\nopagebreak}%
+%%\begin{tabularx}{\textwidth}{@{}l@{~}L@{}}%
+%\tabularx{\textwidth}{@{}l@{~}L@{}}%
+%}
+%{%
+%\endtabularx%
+%%\end{tabularx}%
+%\ingdefifalse%
+%}
 
 
 %% ---- MISC
